@@ -11,7 +11,7 @@
   <h1>JMC TAIDOK</h1>
 
   <button id="btnLeer">📷 Leer etiqueta difícil</button>
-
+<input id="foto" type="file" accept="image/*" capture="environment" style="display:none">
   <p id="estado">Listo para probar</p>
 
   <script>
@@ -19,9 +19,8 @@
     const estado = document.getElementById("estado");
 
     boton.addEventListener("click", function () {
-      estado.textContent = "BOTÓN FUNCIONA";
-      alert("BOTÓN FUNCIONA");
-    });
+  document.getElementById("foto").click();
+});
   </script>
 
 </body>
