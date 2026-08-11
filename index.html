@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JMC TAIDOK - Prueba</title>
+</head>
+
+<body>
+
+  <h1>JMC TAIDOK</h1>
+
+  <button id="btnLeer">📷 Leer etiqueta difícil</button>
+
+  <p id="estado">Listo para probar</p>
+
+  <script>
+    const boton = document.getElementById("btnLeer");
+    const estado = document.getElementById("estado");
+
+    boton.addEventListener("click", function () {
+      estado.textContent = "BOTÓN FUNCIONA";
+      alert("BOTÓN FUNCIONA");
+    });
+  </script>
+
+</body>
+</html>
