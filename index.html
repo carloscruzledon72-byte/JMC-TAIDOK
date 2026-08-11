@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+  <script src="https://unpkg.com/html5-qrcode"></script>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +17,7 @@
 <button id="btnCapturar" style="display:none;">📸 Capturar</button>
 
 <canvas id="canvas" style="display:none;"></canvas>
+  <div id="lectorFoto" style="display:none;"></div>
   <p id="estado">Listo para probar</p>
 
   <script>
@@ -57,7 +59,24 @@ btnCapturar.addEventListener("click", function () {
   ctx.drawImage(camara, 0, 0, canvas.width, canvas.height);
 
   estado.textContent = "FOTO CAPTURADA";
+canvas.toBlob(async function(blob) {
+  try {
+    const archivo = new File([blob], "captura.jpg", { type: "image/jpeg" });
 
+    estado.textContent = "Leyendo código...";
+
+    const lector = new Html5Qrcode("lectorFoto");
+
+    const resultado = await lector.scanFile(archivo, true);
+
+    estado.textContent = "Código leído: " + resultado;
+    alert("Código leído: " + resultado);
+
+  } catch (error) {
+    estado.textContent = "No pude leer el código";
+    console.log(error);
+  }
+}, "image/jpeg", 0.8);
   if (stream) {
     stream.getTracks().forEach(track => track.stop());
   }
