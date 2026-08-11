@@ -21,6 +21,14 @@
     boton.addEventListener("click", function () {
   document.getElementById("foto").click();
 });
+    const foto = document.getElementById("foto");
+
+foto.addEventListener("change", function () {
+  if (foto.files && foto.files[0]) {
+    estado.textContent = "FOTO RECIBIDA";
+    alert("FOTO RECIBIDA");
+  }
+});
   </script>
 
 </body>
