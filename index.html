@@ -11,23 +11,61 @@
   <h1>JMC TAIDOK</h1>
 
   <button id="btnLeer">📷 Leer etiqueta difícil</button>
-<input id="foto" type="file" accept="image/*" capture="environment" style="display:none">
+<video id="camara" autoplay playsinline style="width:100%; max-width:420px; display:none;"></video>
+
+<button id="btnCapturar" style="display:none;">📸 Capturar</button>
+
+<canvas id="canvas" style="display:none;"></canvas>
   <p id="estado">Listo para probar</p>
 
   <script>
-    const boton = document.getElementById("btnLeer");
-    const estado = document.getElementById("estado");
+   const boton = document.getElementById("btnLeer");
+const estado = document.getElementById("estado");
+const camara = document.getElementById("camara");
+const btnCapturar = document.getElementById("btnCapturar");
+const canvas = document.getElementById("canvas");
 
-    boton.addEventListener("click", function () {
-  document.getElementById("foto").click();
-});
-    const foto = document.getElementById("foto");
+let stream = null;
 
-foto.addEventListener("change", function () {
-  if (foto.files && foto.files[0]) {
-    estado.textContent = "FOTO RECIBIDA";
-    alert("FOTO RECIBIDA");
+boton.addEventListener("click", async function () {
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        facingMode: { ideal: "environment" },
+        width: { ideal: 1280 },
+        height: { ideal: 720 }
+      },
+      audio: false
+    });
+
+    camara.srcObject = stream;
+    camara.style.display = "block";
+    btnCapturar.style.display = "inline-block";
+    estado.textContent = "Apunta a la etiqueta y pulsa Capturar";
+
+  } catch (error) {
+    estado.textContent = "No se pudo abrir la cámara";
+    console.log(error);
   }
+});
+
+btnCapturar.addEventListener("click", function () {
+  canvas.width = 1280;
+  canvas.height = 720;
+
+  const ctx = canvas.getContext("2d");
+  ctx.drawImage(camara, 0, 0, canvas.width, canvas.height);
+
+  estado.textContent = "FOTO CAPTURADA";
+
+  if (stream) {
+    stream.getTracks().forEach(track => track.stop());
+  }
+
+  camara.style.display = "none";
+  btnCapturar.style.display = "none";
+
+  alert("FOTO CAPTURADA");
 });
   </script>
 
