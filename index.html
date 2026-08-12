@@ -18,6 +18,7 @@
 
 <canvas id="canvas" style="display:none;"></canvas>
   <div id="lectorFoto" style="display:none;"></div>
+  
   <p id="estado">Listo para probar</p>
 
   <script>
@@ -59,7 +60,7 @@ btnCapturar.addEventListener("click", function () {
   ctx.drawImage(camara, 0, 0, canvas.width, canvas.height);
 
   estado.textContent = "FOTO CAPTURADA";
-canvas.toBlob(async function(blob) {
+  canvas.toBlob(async function(blob) {
   try {
     const archivo = new File([blob], "captura.jpg", { type: "image/jpeg" });
 
@@ -77,6 +78,7 @@ canvas.toBlob(async function(blob) {
     console.log(error);
   }
 }, "image/jpeg", 0.8);
+
   if (stream) {
     stream.getTracks().forEach(track => track.stop());
   }
