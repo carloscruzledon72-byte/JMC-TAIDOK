@@ -60,6 +60,9 @@ btnCapturar.addEventListener("click", function () {
   ctx.drawImage(camara, 0, 0, canvas.width, canvas.height);
 
   estado.textContent = "FOTO CAPTURADA";
+  canvas.style.display = "block";
+canvas.style.width = "100%";
+canvas.style.maxWidth = "420px";
   canvas.toBlob(async function(blob) {
   try {
     const archivo = new File([blob], "captura.jpg", { type: "image/jpeg" });
